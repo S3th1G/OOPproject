@@ -1,0 +1,189 @@
+import java.util.*;
+class Admin 
+{
+         String Tname, dest, date;
+         int tno, cs;
+         
+       Admin()
+  {
+          Scanner sc = new Scanner( System.in);
+          System.out.println("Train no");
+          tno = sc.nextInt();
+           System.out.println("Enter date");
+            date = sc.nextLine();
+           System.out.println("Enter destination \n");
+           dest= sc.nextLine();
+  }
+
+void adminmenu(ArrayList a1)
+{
+     Scanner sc = new Scanner(System.in);
+     System.out.println("Password?");
+    
+   int pass;
+ pass = sc.nextInt();
+if(pass ==1234)
+{
+     System.out.println("Menu \n 1. Add \n 2. Remove \n 3. Exit\n Enter the option");
+     int op;
+    op= sc.nextInt();
+    switch(op)
+{
+           
+       case 1: Admin a = new Admin();
+                      a1.add(a);
+                      break;
+      case 2:   System.out.println("Enter train no that you wish to remove");
+                       int tr;
+                        tr = sc.nextInt(); 
+                        Iterator itr = a1.iterator();
+                         while(itr.hasNext())
+                            {
+                                Admin p=(Admin)itr.next();
+                                if(tr == p.tno)
+                                    {
+                                         a1.remove(p);
+                                     }
+                             }
+   case 3: break;
+}
+}
+else 
+{
+     System.out.println("operation abort \n");
+}
+}
+}
+
+
+class User 
+{
+      String username ;
+      int age;
+      String de, d;
+      double fare;
+     
+ User()
+{
+    Scanner sc = new Scanner(System.in);
+     System.out.println("Enter name and age");
+      username = sc.nextLine();
+      age = sc.nextInt();
+     
+}
+void fare()
+{   
+    Scanner sc = new Scanner(System.in);
+    fare = 350;
+    if(age<12)
+    fare= 0;
+    else if( age > 60)
+    fare = fare-(fare*0.5); // 50% off
+    System.out.println("Are/Were you part of the military?(y/n)");
+    String a;
+    a=sc.nextLine();
+    if((a=="y")||(a=="Y"))
+       fare = fare-(fare*0.3); // 30% off
+       
+    System.out.println("Fare = "+fare);
+   
+}
+void usermenu (ArrayList a1,ArrayList u1)
+{
+     System.out.println("Main Menu \n 1. Reserve \n 2. Cancel \n ");
+      int op;
+      Scanner sc = new Scanner(System.in);
+    op = sc.nextInt();
+    
+   
+    switch(op)
+{
+     case 1 :  System.out.println("WELCOME TO THE RESERVATION MENU \n");
+               
+                    for(int i=0;i<a1.size();i++)
+                    {
+                        System.out.println(a1.get(i));
+                    }  
+                    
+                    System.out.println("Enter the destination\n");
+                    
+                    de = sc.nextLine();
+                    System.out.println("Enter the date\n");
+                    
+                    d = sc.nextLine();
+                    Iterator itr = a1.iterator();
+                    
+                   while(itr.hasNext())
+{
+                   Admin p =(Admin)itr.next();
+                   
+                  if((de==p.dest)&&(d==p.date))
+{
+                    if(p.cs < 100)
+                       p.cs++;
+                     fare();  
+                     
+}
+}
+                       break;
+    case 2: System.out.println("Welcome to the cancellation menu \n");
+            System.out.println(" Enter the name and the date you wished to travel\n");
+            String n,dot;
+            n= sc.nextLine();
+            dot=sc.nextLine();
+            Iterator itr1 = u1.iterator();
+            while(itr1.hasNext())
+            {
+                 User x =(User)itr1.next();
+                 if((n.equals(x.username))&&(dot.equals(x.d)))
+                 {
+                      u1.remove(x);
+                 }
+             }  break;
+                 
+                    
+            
+}
+}
+}
+
+class Main
+{  public static void main(String[] args)
+    {
+        ArrayList<Admin> a = new ArrayList<Admin>();
+        Admin y = new Admin();
+        ArrayList<User> u = new ArrayList<User>();
+        User z = new User();
+        int flag ;
+        int op,ca=0,cu=0;
+        Scanner sc= new Scanner(System.in);
+        do
+        { 
+         System.out.println("MAIN MENU \n 1. Admin Mode \n 2.User mode \n");
+         op=sc.nextInt();
+         switch(op)
+         {
+             case 1: System.out.println("Admin Mode\n");
+                     y.adminmenu(a);
+                     a.add(ca,y);
+                     ca++; break;
+                     
+              case 2: System.out.println("User Mode\n");
+                      z.usermenu(a,u);
+                      u.add(cu,z);
+                      cu++;
+                      break;
+                     
+                     
+                     
+         }    
+            
+         System.out.println("Do you wish to continue?(0 for no, 1 for yes)");
+         
+         flag=sc.nextInt();
+        } while(flag==1);
+            
+        
+    }
+    
+}
